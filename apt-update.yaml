@@ -1,6 +1,5 @@
 ---
- - hosts: site
-   tasks:
+ - tasks:
    - name: Update all packages to their latest version
      ansible.builtin.apt:
        name: "*"

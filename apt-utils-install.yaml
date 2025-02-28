@@ -1,5 +1,5 @@
 ---
- - hosts: manager-1
+ - hosts: manager-node1
    tasks:
    - name: install-apt-utils
      ansible.builtin.apt:

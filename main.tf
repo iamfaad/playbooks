@@ -63,7 +63,7 @@ resource "hcloud_server" "servers" {
  
   # Enable public IPv4
   public_net {
-    ipv4_enabled = false
+    ipv4_enabled = true
     ipv6_enabled = false
   }
  

@@ -35,7 +35,7 @@ variable "image" {
 # Create an SSH key for secure access
 resource "hcloud_ssh_key" "default" {
   name       = "tfservers-key"
-  public_key = file("~/.ssh/id_rsa.pub") # Replace with your public key path
+  public_key = file("/tmp/id_rsa.pub") # Replace with your public key path
 }
  
 # Create a private network

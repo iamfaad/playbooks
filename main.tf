@@ -16,7 +16,12 @@ variable "hcloud_token" {
   description = "Hetzner Cloud API Token"
   sensitive   = true
 }
- 
+
+variable "existing_ssh_key_id" {
+  default     = 27802540  # Replace with your actual SSH key ID
+  description = "Existing SSH Key ID in Hetzner" 
+}
+
 variable "server_type" {
   default     = "cpx11"
   description = "Server type for the instances"
@@ -32,12 +37,7 @@ variable "image" {
   description = "Operating system image for the servers"
 }
  
-# Create an SSH key for secure access
-resource "hcloud_ssh_key" "default" {
-  name       = "tfservers-key"
-  public_key = file("/tmp/id_rsa.pub") # Replace with your public key path
-}
- 
+
 # Create a private network
 resource "hcloud_network" "private_net" {
   name     = "private-network"
@@ -59,7 +59,7 @@ resource "hcloud_server" "servers" {
   server_type = var.server_type
   location    = var.locations[count.index]
   image       = var.image
-  ssh_keys    = [hcloud_ssh_key.default.id]
+  ssh_keys    = [var.existing_ssh_key_id]
  
   # Enable public IPv4
   public_net {
@@ -99,9 +99,9 @@ resource "hcloud_load_balancer_target" "lb_targets" {
 # Configure HTTP (Port 80) traffic on the load balancer
 resource "hcloud_load_balancer_service" "http" {
   load_balancer_id = hcloud_load_balancer.lb.id
-  protocol         = "http"
-  listen_port      = 80
-  destination_port = 80
+  protocol         = "tcp"
+  listen_port      = 22
+  destination_port = 22
 }
  
 # Output the Load Balancer public IP

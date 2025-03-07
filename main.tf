@@ -100,7 +100,7 @@ resource "hcloud_load_balancer_target" "lb_targets" {
 resource "hcloud_load_balancer_service" "http" {
   load_balancer_id = hcloud_load_balancer.lb.id
   protocol         = "tcp"
-  listen_port      = 22
+  listen_port      = 80
   destination_port = 22
 }
  
